@@ -1,5 +1,5 @@
 {
-  "name": "ModernUO-NotAlone-AI-API",
+  "name": "ModernUO-Tranlator-API",
   "build": {
     "dockerfile": "Dockerfile",
     "context": ".."
@@ -56,7 +56,7 @@
     }
   },
   
-  "forwardPorts": [8100, 8888, 6006],
+  "forwardPorts": [10100, 8888, 6006],
   "remoteUser": "root",
   "postCreateCommand": "pip install --no-cache-dir -r requirements.txt"
 }
