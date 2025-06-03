@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: tranlator-api
+    runtime: python
+    repo: https://github.com/gnai-creator/ModernUO-Translator-API
+    branch: main
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn translator_service:app --host=0.0.0.0 --port=10100"
+    envVars:
+      - key: PORT
+        value:  10100
