@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from transformers import pipeline
 
+port = 10100
 app = FastAPI()
 
 # Idiomas suportados (ISO 639-1)
@@ -73,4 +74,4 @@ async def translate(req: TranslationRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8100)
+    uvicorn.run(app, host="127.0.0.1", port=port)
