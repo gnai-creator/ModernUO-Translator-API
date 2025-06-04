@@ -49,7 +49,6 @@ def translate_chain(text, src, tgt):
     if key in MODEL_TABLE:
         model_name = MODEL_TABLE[key]
         translator = get_translator(src, tgt)
-        # Prefixo para modelos T5
         if model_name.startswith("unicamp-dl/translation-"):
             if src == "en" and tgt == "pt":
                 text = f"translate English to Portuguese: {text}"
@@ -57,6 +56,13 @@ def translate_chain(text, src, tgt):
                 text = f"translate Portuguese to English: {text}"
         result = translator(text, max_new_tokens=256)[0]['translation_text']
         return result
+    else:
+        # Tenta caminho intermediário via inglês
+        if (src, "en") in MODEL_TABLE and ("en", tgt) in MODEL_TABLE:
+            intermediate = translate_chain(text, src, "en")
+            return translate_chain(intermediate, "en", tgt)
+        raise ValueError(f"Par de idiomas não suportado: {src}->{tgt}")
+
 
 @app.post("/translate")
 async def translate(req: TranslationRequest):
