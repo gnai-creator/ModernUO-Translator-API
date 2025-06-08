@@ -6,18 +6,18 @@ port = 10100
 app = FastAPI()
 
 # Idiomas suportados (ISO 639-1)
-LANGS = ["PTB", "ENU", "RUS", "ESN", "FRA"]
+LANGS = ["pt", "en", "ru", "es", "fr"]
 
 # Modelos p/ cada par de tradução (direta)
 MODEL_TABLE = {
-    ("PTB", "ENU"): "unicamp-dl/translation-pt-en-t5",
-    ("ENU", "PTB"): "unicamp-dl/translation-en-pt-t5",
-    ("ENU", "ESN"): "Helsinki-NLP/opus-mt-en-es",
-    ("ESN", "ENU"): "Helsinki-NLP/opus-mt-es-en",
-    ("ENU", "FRA"): "Helsinki-NLP/opus-mt-en-fr",
-    ("FRA", "ENU"): "Helsinki-NLP/opus-mt-fr-en",
-    ("ENU", "RUS"): "Helsinki-NLP/opus-mt-en-ru",
-    ("RUS", "ENU"): "Helsinki-NLP/opus-mt-ru-en",
+    ("pt", "en"): "unicamp-dl/translation-pt-en-t5",
+    ("en", "pt"): "unicamp-dl/translation-en-pt-t5",
+    ("en", "es"): "Helsinki-NLP/opus-mt-en-es",
+    ("es", "en"): "Helsinki-NLP/opus-mt-es-en",
+    ("en", "fr"): "Helsinki-NLP/opus-mt-en-fr",
+    ("fr", "en"): "Helsinki-NLP/opus-mt-fr-en",
+    ("en", "ru"): "Helsinki-NLP/opus-mt-en-ru",
+    ("ru", "en"): "Helsinki-NLP/opus-mt-ru-en",
 }
 
 # Prefixos obrigatórios para modelos T5
@@ -59,9 +59,9 @@ def translate_chain(text, src, tgt):
         return result
 
     # Tradução indireta via inglês
-    if (src, "ENU") in MODEL_TABLE and ("ENU", tgt) in MODEL_TABLE:
-        intermediate = translate_chain(text, src, "ENU")
-        return translate_chain(intermediate, "ENU", tgt)
+    if (src, "en") in MODEL_TABLE and ("en", tgt) in MODEL_TABLE:
+        intermediate = translate_chain(text, src, "en")
+        return translate_chain(intermediate, "en", tgt)
 
     raise ValueError(f"Par de idiomas não suportado: {src}->{tgt}")
 
